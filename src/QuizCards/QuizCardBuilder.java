@@ -1,4 +1,5 @@
 package QuizCards;
+
 import javafx.stage.FileChooser;
 
 import javax.swing.*;
@@ -15,26 +16,28 @@ import java.util.ArrayList;
 public class QuizCardBuilder {
     private JTextArea question;
     private JTextArea answer;
-    private ArrayList <QuizCard> cardList;
+    private ArrayList<QuizCard> cardList;
     private JFrame frame;
 
     public static void main(String[] args) {
+        QuizCardBuilder builder = new QuizCardBuilder();
+        builder.go();
 
     }
 
-    public void go () { //make GUI
+    public void go() { //make GUI
         frame = new JFrame("Quiz Card Builder");
         JPanel mainPanel = new JPanel();
-        Font bigFont = new Font("sanserif", Font.BOLD,24);
-        question = new JTextArea(6,20);
+        Font bigFont = new Font("sanserif", Font.BOLD, 24);
+        question = new JTextArea(6, 20);
         question.setLineWrap(true);
         question.setFont(bigFont);
 
-        JScrollPane qScroller = new JScrollPane (question);
+        JScrollPane qScroller = new JScrollPane(question);
         qScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         qScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        answer = new JTextArea(6,20);
+        answer = new JTextArea(6, 20);
         answer.setLineWrap(true);
         answer.setWrapStyleWord(true);
         answer.setFont(bigFont);
@@ -69,7 +72,7 @@ public class QuizCardBuilder {
         menuBar.add(fileMenu);
         frame.setJMenuBar(menuBar);
         frame.getContentPane().add(BorderLayout.CENTER, mainPanel);
-        frame.setSize(500,600);
+        frame.setSize(500, 600);
         frame.setVisible(true);
 
     }
@@ -83,8 +86,8 @@ public class QuizCardBuilder {
         }
     }
 
-    /**inner class for save command. Used when a user wants to save all cards in the carent
-     *
+    /**
+     * inner class for save command. Used when a user wants to save all cards in the carent
      */
     class SaveMenuListener implements ActionListener {
         @Override
@@ -112,13 +115,13 @@ public class QuizCardBuilder {
         question.requestFocus();
     }
 
-    private void saveFile (File file) {
+    private void saveFile(File file) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter((file)));
 
             for (QuizCard cad : cardList) {
-                writer.write(cad.getQuestion()+"/");
-                writer.write(cad.getAnswer()+"\n");
+                writer.write(cad.getQuestion() + "/");
+                writer.write(cad.getAnswer() + "\n");
             }
             writer.close();
 
