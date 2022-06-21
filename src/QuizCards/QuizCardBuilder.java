@@ -77,7 +77,7 @@ public class QuizCardBuilder {
 
     }
 
-    private class NextCardListener implements ActionListener { //inner class, listening the next card bottom pressed
+    public class NextCardListener implements ActionListener { //inner class, listening the next card bottom pressed
         @Override
         public void actionPerformed(ActionEvent ev) {
             QuizCard card = new QuizCard(question.getText(), answer.getText());
@@ -89,18 +89,19 @@ public class QuizCardBuilder {
     /**
      * inner class for save command. Used when a user wants to save all cards in the carent
      */
-    class SaveMenuListener implements ActionListener {
+    public class SaveMenuListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent ev) {
             QuizCard card = new QuizCard(question.getText(), answer.getText());
             cardList.add(card);
             JFileChooser fileSave = new JFileChooser();
             fileSave.showSaveDialog(frame);
+            saveFile(fileSave.getSelectedFile());
 
         }
     }
 
-    private class NewMenuListener implements ActionListener { //inner class
+    public class NewMenuListener implements ActionListener { //inner class
         @Override
         public void actionPerformed(ActionEvent ev) {
             cardList.clear();
@@ -119,9 +120,9 @@ public class QuizCardBuilder {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter((file)));
 
-            for (QuizCard cad : cardList) {
-                writer.write(cad.getQuestion() + "/");
-                writer.write(cad.getAnswer() + "\n");
+            for (QuizCard card : cardList) {
+                writer.write(card.getQuestion() + "/");
+                writer.write(card.getAnswer() + "\n");
             }
             writer.close();
 
