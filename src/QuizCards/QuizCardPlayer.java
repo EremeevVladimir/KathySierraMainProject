@@ -63,7 +63,7 @@ public class QuizCardPlayer {
 
     // nextCard button. If it's question it shows answer, answer - shows next question
     //set flag answer / question
-    class NextCardListener implements ActionListener {
+     public class NextCardListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
 
@@ -83,7 +83,7 @@ public class QuizCardPlayer {
         }
     }
     //brings up the menu for choosing which set of card to open
-    class OpenMenuListener implements ActionListener {
+    public class OpenMenuListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileOpen = new JFileChooser();
