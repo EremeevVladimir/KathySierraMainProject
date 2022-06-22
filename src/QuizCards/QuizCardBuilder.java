@@ -96,6 +96,7 @@ public class QuizCardBuilder {
             cardList.add(card);
             JFileChooser fileSave = new JFileChooser();
             fileSave.showSaveDialog(frame);
+            fileSave.showSaveDialog(frame);
             saveFile(fileSave.getSelectedFile());
 
         }
