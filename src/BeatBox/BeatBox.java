@@ -51,6 +51,15 @@ public class BeatBox implements Serializable {
         downTempo.addActionListener(new MyDownTempoListener());
         buttonBox.add(downTempo);
 
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(new MySendListener());
+        buttonBox.add(saveButton);
+
+        JButton loadButton = new JButton("Load");
+        loadButton.addActionListener(new MyReadInListener());
+        buttonBox.add(loadButton);
+
+
         JButton serialiseItButton = new JButton("SerialiseIt");
         serialiseItButton.addActionListener(new MySendListener());
         buttonBox.add (serialiseItButton);
@@ -163,6 +172,53 @@ public class BeatBox implements Serializable {
         public void actionPerformed(ActionEvent a) {
             float tempoFactor = sequencer.getTempoFactor();
             sequencer.setTempoFactor((float) (tempoFactor * .97));
+        }
+    }
+    public class MySendListener implements ActionListener { //сохранение дорожки
+        @Override
+        public void actionPerformed(ActionEvent a) {
+            boolean [] checkBoxState = null;
+            for (int i = 0; i< 256; i++) {
+                JCheckBox check = (JCheckBox) checkBoxList.get(i);
+                if (check.isSelected()){
+                    checkBoxState[i] = true;
+                }
+            }
+            try {
+                JFileChooser fileSave = new JFileChooser();
+                fileSave.showSaveDialog(theFrame);
+
+                FileOutputStream fileStream = new FileOutputStream(fileSave.getSelectedFile());
+                ObjectOutputStream os = new ObjectOutputStream(fileStream);
+                os.writeObject(checkBoxState);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    public class MyReadInListener implements ActionListener {//восстановление записи
+        @Override
+        public void actionPerformed(ActionEvent a) {
+            boolean [] checkboxState = null;
+            try {
+                JFileChooser fileOpen = new JFileChooser();
+                fileOpen.showOpenDialog(theFrame);
+                FileInputStream fileInn = new FileInputStream(fileOpen.getSelectedFile());
+                ObjectInputStream is = new ObjectInputStream(fileInn);
+                checkboxState = (boolean[]) is.readObject();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            for (int i = 0; i < 256; i++) {
+                JCheckBox check = (JCheckBox) checkBoxList.get(i);
+                if (checkboxState[i]) {
+                    check.setSelected(true);
+                } else {
+                    check.setSelected(false);
+                }
+            }
+            sequencer.stop();
+            buildTrackAndStart();
         }
     }
 
