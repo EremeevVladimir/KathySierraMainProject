@@ -222,50 +222,6 @@ public class BeatBox implements Serializable {
         }
     }
 
-    public class MySendListener implements ActionListener { //сохранение
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            boolean [] checkboxState = new boolean[256];
-            for (int i = 0; i<256; i++) {
-                JCheckBox check = (JCheckBox) checkBoxList.get(i);
-                if (check.isSelected()) {
-                    checkboxState[i] = true;
-                }
-            }
-            try {
-                FileOutputStream fileStream = new FileOutputStream(new File("Checkbox.ser"));
-                ObjectOutputStream os = new ObjectOutputStream(fileStream);
-                os.writeObject(checkboxState);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public class MyReadInListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            boolean [] checkboxState = null;
-            try {
-                FileInputStream filestream = new FileInputStream(new File("Checkbox.ser"));
-                ObjectInputStream is = new ObjectInputStream(filestream);
-                checkboxState = (boolean[]) is.readObject();
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            for (int i = 0; i< 256; i++) {
-                JCheckBox check = (JCheckBox) checkBoxList.get(i);
-                if (checkboxState[i]) {
-                    check.setSelected(true);
-                } else {
-                    check.setSelected(false);
-                }
-            }
-            sequencer.stop();
-            buildTrackAndStart();
-        }
-    }
-
     public void makeTracks(int[] list) {
         for (int i = 0; i < 16; i++) {
             int key = list[i];
